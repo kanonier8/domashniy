@@ -1,0 +1,200 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start
+}
+
+.top {
+  /*
+    отступ снизу привязывается к ширине вьюпорта
+    чтобы создать пространство для плеера
+    который абсолютно спозиционирован
+   */
+  padding: 0 10px 57.4vw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+}
+
+.image {
+  flex-shrink: 0;
+  width: 50px;
+  position: relative;
+}
+.image img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.age {
+  width: 26px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: #000;
+  position: absolute;
+  color: #fff;
+  font-size: 12px;
+  opacity: 0.6;
+  border-radius: 4px;
+  left: 3px;
+  bottom: 3px;
+}
+
+.about {
+  padding-left: 13px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1;
+  margin: 0 0 8px;
+}
+
+.timeslot {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.time {
+  font-weight: bold;
+  font-size: 26px;
+}
+
+.days {
+  padding-left: 10px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+
+.bottom {
+  padding: 16px 10px 0;
+  box-sizing: border-box;
+}
+
+.meta {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.series {
+  color: #cacaca;
+  text-decoration: none;
+}
+
+.season {
+  color: #cacaca;
+  position: relative;
+  padding-left: 12px;
+  text-decoration: none;
+}
+.season:before {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  background-color: #cacaca;
+  border-radius: 50%;
+}
+
+.lastViews {
+  display: none;
+}
+
+.article {
+  padding-top: 13px;
+  color: #cacaca;
+  font-size: 15px;
+  line-height: 20px;
+}
+.more {
+  display: block;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 12px;
+  padding: 0;
+  border: 0;
+  font-weight: bold;
+  background: none;
+  margin-top: 10px;
+}
+
+
+@media screen and (min-width: 1024px) {
+
+  .content {
+    width: 295px;
+  }
+
+  .top {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .image {
+    width: 60px;
+  }
+
+  .age {
+    width: 30px;
+    height: 21px;
+    font-size: 14px;
+    line-height: 21px;
+    bottom: 4px;
+    left: 4px;
+  }
+
+  .about {
+    padding-left: 12px;
+  }
+
+  .title {
+    font-size: 21px
+  }
+
+  .time {
+    font-size: 30px;
+  }
+
+  .days {
+    font-size: 12px;
+  }
+
+  .bottom {
+    padding: 40px 0 0;
+  }
+
+  .meta {
+    font-size: 17px;
+    flex-wrap: wrap;
+  }
+
+  .lastViews {
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    color: #cacaca;
+    line-height: 1;
+    padding-top: 9px;
+    font-weight: normal;
+  }
+
+  .article {
+    padding-top: 18px;
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+}

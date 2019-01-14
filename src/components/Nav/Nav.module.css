@@ -1,0 +1,53 @@
+.content {
+  padding-top: 30px;
+  margin-bottom: -1px;
+}
+
+.list {
+  width: 100%;
+}
+
+.item {
+  list-style: none;
+}
+
+.link {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 0 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  display: block;
+}
+.linkActive {
+  composes: link;
+  background: url('./Pointer.png') no-repeat center bottom;
+  background-size: 28px;
+}
+
+.active {
+  background: url('./Pointer.png') no-repeat center bottom;
+  background-size: 28px 10px;
+}
+
+@media screen and (min-width: 1024px) {
+
+  .list {
+    display: flex;
+    align-items: center;
+  }
+
+  .link {
+    padding: 0 0 34px;
+    margin-right: 24px;
+  }
+  .link:last-child {
+    margin-right: 0;
+  }
+  .linkActive {
+    background-size: 32px 10px; 
+  }
+
+}
