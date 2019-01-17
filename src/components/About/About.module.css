@@ -2,23 +2,23 @@
   display: none;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
 
   .content {
     display: flex;
     align-items: center;
     padding-top: 13px;
     border-top: 1px solid rgba(149,149,149, .3);
-    font-size: 15px;
+    font-size: 13px;
     line-height: 15px;
     color: #303030;
     position: relative;
     z-index: 3;
-    top: -120px;
+    top: -100px;
   }
 
   .title {
-    font-size: 17px;
+    font-size: 15px;
     color: #303030;
     font-weight: bold;
     padding-right: 24px;
@@ -30,8 +30,24 @@
     text-decoration: none;
     color: #303030;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 11px;
     margin-left: 5px
   }
 
+}
+
+@media screen and (min-width: 1024px) {
+
+  .content {
+    font-size: 15px;
+    top: -120px;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+  .more {
+    font-size: 12px;
+  }
+  
 }

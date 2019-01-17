@@ -1,0 +1,25 @@
+.flickity-prev-next-button {
+  position: absolute;
+  width: 12px;
+  height: 20px;
+  background: url('./ArrowGray.png') no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+  top: 50%;
+  border: none;
+  display: block;
+  z-index: 3;
+}
+
+.flickity-prev-next-button:hover {
+  background-image: url('./ArrowPink.png');
+}
+
+.previous {
+  left: 0;
+  transform: translateY(-50%);
+}
+.next {
+  right: 0;
+  transform: translateY(-50%) rotate(180deg);
+}

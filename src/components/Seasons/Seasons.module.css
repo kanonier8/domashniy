@@ -16,7 +16,14 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
   width: calc(100% - 81px);
+}
+
+.carousel {
+  composes: list;
+  display: block;
 }
 
 .item {
@@ -48,7 +55,7 @@
 
   .title {
     font-size: 17px;
-    padding: 0 70px 0 0;
+    padding: 0 40px 0 0;
   }
 
   .link {
@@ -58,6 +65,29 @@
   }
   .linkActive {
     border-radius: 19px;
+  }
+  .carousel {
+    padding: 0 40px;
+    position: relative;
+  }
+
+  .carousel:before,
+  .carousel:after {
+    content: '';
+    display: block;
+    position: absolute;
+    background: linear-gradient(to right, #fff 45%, transparent);
+    top: 0;
+    width: 45px;
+    height: 100%;
+    z-index: 2;
+    left: 0;
+  }
+
+  .carousel:after {
+    left: auto;
+    right: 0;
+    transform: rotate(180deg)
   }
 
 }

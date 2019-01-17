@@ -20,7 +20,7 @@ class Nav extends Component {
       cellAlign: 'left'
     };
 
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 768) {
       this.carousel = new Flickity(this.list, this.carouselConfig);
       if (this.carousel instanceof Flickity) {
         this.setState({ carouselInit: true });

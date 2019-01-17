@@ -26,16 +26,26 @@
 }
 
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
 
   .content {
-    width: 680px;
-    height: 383px;
+    width: 496px;
+    height: 263px;
     position: relative;
     top: auto;
     left: auto;
     border-radius: 4px;
     overflow: hidden;
+  }
+
+}
+
+
+@media screen and (min-width: 1024px) {
+
+  .content {
+    width: 680px;
+    height: 383px;
   }
 
 }

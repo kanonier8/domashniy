@@ -54,7 +54,7 @@
     padding: 0 0 34px;
     margin-right: 24px;
   }
-  .link:last-child {
+  .item:last-child .link{
     margin-right: 0;
   }
   .linkActive {
