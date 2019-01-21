@@ -1,35 +1,59 @@
 import React, { Component } from 'react';
 import Flickity from 'flickity';
+
+import { connect } from 'react-redux';
+import { getNav } from '../../redux/actions/nav';
+
 import styles from './Nav.module.css';
 
 
 class Nav extends Component {
 
   state = {
-    anchor: 'anchor1',
-    carouselInit: false
+    anchor: ''
   };
 
 
 
   componentDidMount() {
 
+    this.props.getNavAction('/nav.json');
+
+
     this.carouselConfig = {
       prevNextButtons: false,
       pageDots: false,
       cellAlign: 'left'
     };
+    
 
+  }
+
+
+  initCarousel() {
+    console.log('run flick', this.list.children);
     if (window.innerWidth < 768) {
       this.carousel = new Flickity(this.list, this.carouselConfig);
       if (this.carousel instanceof Flickity) {
-        this.setState({ carouselInit: true });
+        // this.setState({ isCarouselInit: true });
       }
     } else if (this.carousel instanceof Flickity) {
       this.carousel.destroy();
     }
-
   }
+
+  renderList(data) {
+    return data.map(item => (
+      <li className={styles.item} key={item.id}>
+        <a className={this.state.anchor === item.anchor ? styles.linkActive : styles.link}
+          href={`#${item.anchor}`}
+          onClick={this.handleClick}>
+          {item.title}
+        </a>
+      </li>
+    ));
+  }
+
 
   handleClick = (event) => {
     event.preventDefault();
@@ -37,52 +61,18 @@ class Nav extends Component {
   };
 
 
+
   render() {
+    const data = this.props.data;
+
     return (
       <nav className={styles.content}>
-        <ul className={this.state.carouselInit ? styles.carousel : styles.list} ref={el => this.list = el}>
-          <li className={styles.item}>
-            <a className={this.state.anchor === 'anchor1' ? styles.linkActive : styles.link} 
-              href="#anchor1"
-              onClick={this.handleClick}>
-              все серии
-            </a>
-          </li>
-          <li className={styles.item}>
-            <a className={this.state.anchor === 'anchor2' ? styles.linkActive : styles.link} 
-              href="#anchor2"
-              onClick={this.handleClick}>
-              статьи
-            </a>
-          </li>
-          <li className={styles.item}>
-            <a className={this.state.anchor === 'anchor3' ? styles.linkActive : styles.link} 
-              href="#anchor3"
-              onClick={this.handleClick}>
-              смотри также
-            </a>
-          </li>
-          <li className={styles.item}>
-            <a className={this.state.anchor === 'anchor4' ? styles.linkActive : styles.link} 
-              href="#anchor4"
-              onClick={this.handleClick}>
-              комментарии
-            </a>
-          </li>
-          <li className={styles.item}>
-            <a className={this.state.anchor === 'anchor5' ? styles.linkActive : styles.link} 
-              href="#anchor5"
-              onClick={this.handleClick}>
-              герои
-            </a>
-          </li>
-          <li className={styles.item}>
-            <a className={this.state.anchor === 'anchor6' ? styles.linkActive : styles.link} 
-              href="#anchor6"
-              onClick={this.handleClick}>
-              о сериале
-            </a>
-          </li>
+        <ul className={this.carousel ? styles.carousel : styles.list}
+            ref={el => this.list = el}>
+          { data.length ? 
+              this.renderList(data) :
+              null
+          }
         </ul>
       </nav>
     )
@@ -90,4 +80,15 @@ class Nav extends Component {
 
 };
 
-export default Nav;
+const mapStateToProps = (store) => { 
+  console.log('STORE', store);
+  return { ...store.nav }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getNavAction: year => dispatch(getNav(year)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
