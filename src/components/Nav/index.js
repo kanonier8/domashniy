@@ -30,13 +30,16 @@ class Nav extends Component {
   }
 
 
+  componentDidUpdate() {
+    if (this.props.data && this.props.data.length) {
+      this.initCarousel();
+    }
+  }
+
+
   initCarousel() {
-    console.log('run flick', this.list.children);
     if (window.innerWidth < 768) {
       this.carousel = new Flickity(this.list, this.carouselConfig);
-      if (this.carousel instanceof Flickity) {
-        // this.setState({ isCarouselInit: true });
-      }
     } else if (this.carousel instanceof Flickity) {
       this.carousel.destroy();
     }
@@ -46,8 +49,8 @@ class Nav extends Component {
     return data.map(item => (
       <li className={styles.item} key={item.id}>
         <a className={this.state.anchor === item.anchor ? styles.linkActive : styles.link}
-          href={`#${item.anchor}`}
-          onClick={this.handleClick}>
+            href={`#${item.anchor}`}
+            onClick={this.handleClick}>
           {item.title}
         </a>
       </li>
@@ -67,11 +70,11 @@ class Nav extends Component {
 
     return (
       <nav className={styles.content}>
-        <ul className={this.carousel ? styles.carousel : styles.list}
+        <ul className={data.length ? styles.carousel : styles.list}
             ref={el => this.list = el}>
-          { data.length ? 
-              this.renderList(data) :
-              null
+          {
+            data.length &&
+            this.renderList(data)
           }
         </ul>
       </nav>
@@ -80,14 +83,13 @@ class Nav extends Component {
 
 };
 
-const mapStateToProps = (store) => { 
-  console.log('STORE', store);
+const mapStateToProps = (store) => {
   return { ...store.nav }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getNavAction: year => dispatch(getNav(year)),
+    getNavAction: project => dispatch(getNav(project)),
   }
 }
 
