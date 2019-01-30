@@ -9,13 +9,11 @@ import './Carousel.css';
 
 class Seasons extends Component {
 
-  state = {
-    carouselInit: false
-  };
+  state = { };
 
   componentDidMount() {
 
-    this.props.getSeasonsAction('/seasons.json')
+    this.props.getSeasonsAction('/seasons.json');
 
     this.carouselConfig = {
       prevNextButtons: false,
@@ -41,7 +39,7 @@ class Seasons extends Component {
   handleClick = (event) => {
     event.preventDefault();
     this.setState({ anchor: event.currentTarget.getAttribute('href').slice(1) });
-  }
+  };
 
   renderList(data) {
     return data.map((item, index) => (
@@ -78,8 +76,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSeasonsAction: (project) => dispatch(getSeasons(project)),
+    getSeasonsAction: (projectID) => dispatch(getSeasons(projectID)),
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Seasons);

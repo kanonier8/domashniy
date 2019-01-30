@@ -1,7 +1,38 @@
 import React, { Component } from 'react';
 import styles from './Series.module.css';
 
+import { connect } from 'react-redux';
+import { getSeries } from '../../redux/actions/series';
+
 class Series extends Component {
+
+
+  componentDidMount() {
+    this.props.getSeriesAction('/series.json');
+  }
+
+
+  renderList(data) {
+      return data.map((item, index) => (
+          <li className={styles.item} key={item.id}>
+              <a href="/" className={styles.link}>
+                  <div className={styles.imageNotification}>
+                      <img src={item.poster} alt={item.title}/>
+                      <div className={styles.notification}>{new Date(item.a)}</div>
+                  </div>
+
+                  <div className={styles.info}>
+                      <div className={styles.title}>
+                          <div className={styles.series}>{item.series} серия</div>
+                          <div className={styles.season}>{item.seaosn} сезон</div>
+                      </div>
+                      {/* <div className={styles.date}>21 мая 2018</div> */}
+                  </div>
+              </a>
+          </li>
+      ))
+  }
+
 
   render() {
     return (
@@ -292,4 +323,14 @@ class Series extends Component {
 
 };
 
-export default Series;
+const mapStateToProps = (store) => {
+    return { ...store.series }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getSeriesAction: (seasonID) => dispatch(getSeries(seasonID)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Series);
