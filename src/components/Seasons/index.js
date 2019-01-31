@@ -3,17 +3,18 @@ import Flickity from 'flickity';
 
 import { connect } from 'react-redux';
 import { getSeasons } from '../../redux/actions/seasons';
+import { getSeries } from '../../redux/actions/series';
 
 import styles from './Seasons.module.css';
 import './Carousel.css';
 
 class Seasons extends Component {
 
-  state = { };
+  state = {};
 
   componentDidMount() {
 
-    this.props.getSeasonsAction('/seasons.json');
+    this.props.getSeasonsAction('seasons/velvek.json');
 
     this.carouselConfig = {
       prevNextButtons: false,
@@ -38,18 +39,24 @@ class Seasons extends Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    this.setState({ anchor: event.currentTarget.getAttribute('href').slice(1) });
+    const idSelectSeason = parseInt(event.currentTarget.dataset.id);
+    this.setState({ idActiveSeason: idSelectSeason});
+    this.props.getSeriesAction(`series/${idSelectSeason}.json`);
   };
 
-  renderList(data) {
-    return data.map((item, index) => (
-      <li className={styles.item} key={item.id}>
-        <a className={index === 0 ? styles.linkActive : styles.link}
-            onClick={this.handleClick}
-            href="/">{item.title}</a>
-      </li>
-    ));
-  }
+  renderList = (data) => {
+    return data.map((item, index) => {
+      return (
+        <li className={styles.item} key={item.id}>
+          <a className={(this.state.idActiveSeason  === item.id) ? styles.linkActive : styles.link}
+              data-id={item.id}
+              onClick={this.handleClick}
+              href="/">
+              {item.title}
+          </a>
+        </li>)
+    });
+  };
 
   render() {
     const data = this.props.data;
@@ -76,7 +83,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSeasonsAction: (projectID) => dispatch(getSeasons(projectID)),
+    getSeasonsAction: (projectId) => dispatch(getSeasons(projectId)),
+    getSeriesAction: (seasonId) => dispatch(getSeries(seasonId)),
   }
 };
 

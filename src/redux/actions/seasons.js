@@ -4,15 +4,15 @@ export const GET_SEASONS_REQUEST = 'GET_SEASONS_REQUEST';
 export const GET_SEASONS_SUCCESS = 'GET_SEASONS_SUCCESS';
 export const GET_SEASONS_ERROR = 'GET_NAV_ERROR';
 
-export function getSeasons(projeсtID) {
+export function getSeasons(projeсtId) {
   return dispatch => {
 
     dispatch({
       type: GET_SEASONS_REQUEST,
-      payload: projeсtID
+      payload: projeсtId
     });
 
-    fetch(resolverUrl(projeсtID), { method: 'GET' })
+    fetch(resolverUrl(projeсtId), { method: 'GET' })
       .then(response => response.json())
       .then(response =>
         dispatch({

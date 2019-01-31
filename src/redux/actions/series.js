@@ -2,17 +2,17 @@ import { resolverUrl } from '../../Helper';
 
 export const GET_SERIES_REQUEST = 'GET_SERIES_REQUEST';
 export const GET_SERIES_SUCCESS = 'GET_SERIES_SUCCESS';
-export const GET_SERIES_ERROR = 'GET_NAV_ERROR';
+export const GET_SERIES_ERROR = 'GET_SERIES_ERROR';
 
-export function getSeries(seasonID) {
+export function getSeries(seasonId) {
     return dispatch => {
 
         dispatch({
             type: GET_SERIES_REQUEST,
-            payload: seasonID
+            payload: seasonId
         });
 
-        fetch(resolverUrl(seasonID), { method: 'GET' })
+        fetch(resolverUrl(seasonId), { method: 'GET' })
             .then(response => response.json())
             .then(response =>
                 dispatch({

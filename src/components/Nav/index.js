@@ -17,7 +17,7 @@ class Nav extends Component {
 
   componentDidMount() {
 
-    this.props.getNavAction('/nav.json');
+    this.props.getNavAction('nav/velvek.json');
 
 
     this.carouselConfig = {

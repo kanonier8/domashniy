@@ -6,314 +6,64 @@ import { getSeries } from '../../redux/actions/series';
 
 class Series extends Component {
 
+  state = {
+    progress: 0,
+    watching: false
+  };
 
   componentDidMount() {
-    this.props.getSeriesAction('/series.json');
+    this.props.getSeriesAction('series/0.json');
   }
 
 
   renderList(data) {
-      return data.map((item, index) => (
+      return data.map((item, index) => {
+        let classImage = styles.image;
+        let hasDuration = item.duration && !item.announce && !this.state.watching && !item.progress;
+        let hasDate = item.date && !item.announce && !this.state.watching && !item.progress;
+        let hasPlay = !item.announce && !this.state.watching;
+        let imageContent = '';
+        if (item.announce) {
+          classImage = styles.imageNotification;
+          imageContent = <div className={styles.notification}>{new Date(item.announce)}</div>
+        } else if (item.progress) {
+          classImage = styles.imageProgress;
+          imageContent = (<div className={styles.progress}>
+                             <div className={styles.progressBar}></div>
+                          </div>);
+        }
+      return (
           <li className={styles.item} key={item.id}>
               <a href="/" className={styles.link}>
-                  <div className={styles.imageNotification}>
+                  <div className={classImage}>
                       <img src={item.poster} alt={item.title}/>
-                      <div className={styles.notification}>{new Date(item.a)}</div>
+                      { imageContent }
+                      { hasPlay && <div className={styles.play} /> }
+                      { hasDuration && <div className={styles.duration}>{item.duration}</div> }
                   </div>
-
                   <div className={styles.info}>
                       <div className={styles.title}>
                           <div className={styles.series}>{item.series} серия</div>
-                          <div className={styles.season}>{item.seaosn} сезон</div>
+                          <div className={styles.season}>{item.season} сезон</div>
                       </div>
-                      {/* <div className={styles.date}>21 мая 2018</div> */}
+                      { hasDate && <div className={styles.date}>{new Date(item.date)}</div> }
                   </div>
               </a>
           </li>
-      ))
+      )
+    })
   }
 
 
   render() {
+    const data = this.props.data;
     return (
       <div className={styles.content}>
         <ul className={styles.list}>
 
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.imageNotification}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.notification}>1 июня 2018</div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                {/* <div className={styles.date}>21 мая 2018</div> */}
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.imageWatching}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                {/* <div className={styles.date}>21 мая 2018</div> */}
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.imageProgress}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.progress}>
-                  <div className={styles.progressBar}></div>
-                </div>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                {/* <div className={styles.date}>21 мая 2018</div> */}
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-                <div className={styles.duration}>01:42:00</div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                {/* <div className={styles.date}>21 мая 2018</div> */}
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-                <div className={styles.duration}>42:00</div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
-
-          <li className={styles.item}>
-            <a href="/" className={styles.link}>
-              <div className={styles.image}>
-                <img src="https://placeimg.com/225/133/people" alt="Название видео"/>
-                <div className={styles.play}></div>
-              </div>
-
-              <div className={styles.info}>
-                <div className={styles.title}>
-                  <div className={styles.series}>999 серия</div>
-                  <div className={styles.season}>99 сезон</div>
-                </div>
-                <div className={styles.date}>21 мая 2018</div>
-              </div>
-            </a>
-          </li>
+            { data.length &&
+              this.renderList(data)
+            }
 
         </ul>
         <button className={styles.toggle}>Показать все</button>
