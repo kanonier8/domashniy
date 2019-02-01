@@ -30,36 +30,37 @@ class Info extends Component {
 
   render() {
     const { expanded, truncated } = this.state;
+    console.log(this.props);
 
     return (
       <div className={styles.content}>
         
         <div className={styles.top}>
           <div className={styles.image}>
-            <img src="https://placeimg.com/60/85/any" alt="По делам несовершеннолетних"/>
-            <div className={styles.age}>16+</div>
+            <img src={this.props.poster} alt={this.props.title}/>
+            <div className={styles.age}>{this.props.age}</div>
           </div>
           <div className={styles.about}>
-            <h1 className={styles.title}>По делам несовершеннолетних</h1>
+            <h1 className={styles.title}>{this.props.title}</h1>
             <div className={styles.timeslot}>
-              <div className={styles.time}>18:00</div>
-              <div className={styles.days}>понедельник- четверг</div>
+              <div className={styles.time}>{this.props.time}</div>
+              <div className={styles.days}>{this.props.days}</div>
             </div>
           </div>
         </div>
 
         <div className={styles.bottom}>
           <div className={styles.meta}>
-            <a href="/" className={styles.series}>8 серия</a>
-            <a href="/" className={styles.season}>4 сезон</a>
-            <div className={styles.lastViews}>Было в эфире 21 мая 2018</div>
+            <a href="/" className={styles.series}>{this.props.series} серия</a>
+            <a href="/" className={styles.season}>{this.props.season} сезон</a>
+            {/* <div className={styles.lastViews}>Было в эфире {this.props.seen && new Date(this.props.seen * 1000)}</div> */}
           </div>
           <div className={styles.article}>
             <Truncate 
               lines={!expanded && this.lines}
               onTruncate={this.handleTruncate}
               ellipsis='...'>
-              В 8-й серии сериала «Великолепный век»: султан Сулейман (Халит Эргенч) по традиции один раз месяц выходит в Ватикане готовят покушение на падишаха, которое сумел предотвратить вернувшийся в Стамбул Малкочоглу Бали-бей (Бурак Озчивит). Он спас султану жизнь. Вслед за этим происшествием падишах отправился в очередной военный поход. С собой он взял сыновей Хюррем (Мерьем Узерли) - Мехмета
+              {this.props.description}
             </Truncate>
               <button className={styles.more} onClick={this.toggleLines}>
                 {

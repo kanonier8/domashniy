@@ -5,14 +5,19 @@ class Player extends Component {
 
 
   render() {
+    console.log('v=player', this.props);
     return (
       <div className={styles.content}>
-        <iframe
+        {
+          this.props.id &&
+          <iframe
             className={styles.frame}
-            title="Название видео"
+            title={this.props.title}
             allowFullScreen={true}
             allow="autoplay; encrypted-media"
-            src="https://player.videomore.ru/?autoplay=never&partner_id=357&track_id=735397&userToken=" />
+            src={`https://player.videomore.ru/?autoplay=never&partner_id=357&track_id=${this.props.id}&userToken=`} />
+        }
+        
         {/* <button className={styles.play}></button> */}
       </div>
     )
