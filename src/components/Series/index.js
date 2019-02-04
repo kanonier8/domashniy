@@ -4,6 +4,8 @@ import styles from './Series.module.css';
 import { connect } from 'react-redux';
 import { getSeries } from '../../redux/actions/series';
 
+import Spinner from '../Spinner/';
+
 class Series extends Component {
 
   state = {
@@ -56,15 +58,12 @@ class Series extends Component {
 
 
   render() {
-    const data = this.props.data;
+    const {isFetching, data} = this.props;
     return (
-      <div className={styles.content}>
+      <div className={isFetching ? styles.contentLoading : styles.content}>
+          { isFetching && <Spinner/> }
         <ul className={styles.list}>
-
-            { data.length &&
-              this.renderList(data)
-            }
-
+            { data.length && this.renderList(data) }
         </ul>
         <button className={styles.toggle}>Показать все</button>
       </div>

@@ -1,6 +1,12 @@
 .content {
   position: relative;
 }
+.contentLoading {
+  composes: content;
+}
+.contentLoading {
+  filter: blur(3px);
+}
 
 @media screen and (min-width: 768px) {
 

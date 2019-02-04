@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Player from './Player/';
 import Info from './Info/';
+import Spinner from '../Spinner/';
 
 import { connect } from 'react-redux';
 import { getVideo } from '../../redux/actions/video';
@@ -15,9 +16,10 @@ class Video extends Component {
   }
 
   render() {
-    const data = this.props.data;
+    const { data, isFetching } = this.props;
     return (
-      <div className={styles.content}>
+      <div className={ isFetching ? styles.contentLoading : styles.content}>
+        { isFetching &&  <Spinner /> }
         <Player id={data.trackId} title={data.title} />
         <Info {...data}/>
       </div>
