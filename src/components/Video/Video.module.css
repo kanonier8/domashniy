@@ -3,9 +3,18 @@
 }
 .contentLoading {
   composes: content;
+  filter: blur(1px);
 }
-.contentLoading {
-  filter: blur(3px);
+.contentLoading:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: .1;
 }
 
 @media screen and (min-width: 768px) {

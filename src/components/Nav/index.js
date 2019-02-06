@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Flickity from 'flickity';
 
 import { connect } from 'react-redux';
@@ -38,7 +39,7 @@ class Nav extends Component {
 
 
   initCarousel() {
-    if (window.innerWidth < 768) {
+    if (this.isMobileView()) {
       this.carousel = new Flickity(this.list, this.carouselConfig);
     } else if (this.carousel instanceof Flickity) {
       this.carousel.destroy();
@@ -57,6 +58,10 @@ class Nav extends Component {
     ));
   }
 
+  isMobileView () {
+    return window.innerWidth < 768 ? true : false;
+  }
+
 
   handleClick = (event) => {
     event.preventDefault();
@@ -70,7 +75,7 @@ class Nav extends Component {
 
     return (
       <nav className={styles.content}>
-        <ul className={data.length ? styles.carousel : styles.list}
+        <ul className={(data.length && this.isMobileView()) ? styles.carousel : styles.list}
             ref={el => this.list = el}>
           {
             data.length &&
@@ -81,6 +86,12 @@ class Nav extends Component {
     )
   }
 
+}
+
+Nav.propTypes = {
+    id: PropTypes.number,
+    title: PropTypes.string,
+    anchor: PropTypes.string
 };
 
 const mapStateToProps = (store) => {
@@ -91,6 +102,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getNavAction: project => dispatch(getNav(project)),
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

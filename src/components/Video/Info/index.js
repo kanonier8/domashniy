@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Truncate from 'react-truncate';
+
 import styles from './VideoInfo.module.css';
 
 class Info extends Component {
@@ -19,18 +20,17 @@ class Info extends Component {
         truncated
       });
     }
-  }
+  };
 
   toggleLines = (event) => {
     event.preventDefault();
     this.setState({
       expanded: !this.state.expanded
     });
-  }
+  };
 
   render() {
     const { expanded, truncated } = this.state;
-    console.log(this.props);
 
     return (
       <div className={styles.content}>

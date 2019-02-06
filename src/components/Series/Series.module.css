@@ -8,7 +8,7 @@
 }
 
 .contentLoading .list {
-  filter: blur(5px);
+  filter: blur(1px);
   position: relative;
 }
 .contentLoading .list:after {

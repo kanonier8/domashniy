@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import styles from './Series.module.css';
+import PropTypes, { arrayOf, shape } from 'prop-types';
+
+import Spinner from '../Spinner/';
 
 import { connect } from 'react-redux';
 import { getSeries } from '../../redux/actions/series';
-import { getVideo } from '../../redux/actions/video';
+import { getVideo, getVideoFromHistory } from '../../redux/actions/video';
 
-import Spinner from '../Spinner/';
+import styles from './Series.module.css';
 
 class Series extends Component {
 
@@ -22,8 +24,12 @@ class Series extends Component {
     event.preventDefault();
     const idSelectVideo = parseInt(event.currentTarget.dataset.id);
     this.setState({ idActiveSeason: idSelectVideo });
-    this.props.getVideoAction(`project/${idSelectVideo}.json`);
-  }
+    if (this.props.videoHistory[`project/${idSelectVideo}.json`]) {
+        this.props.getVideoFromHistoryAction(`project/${idSelectVideo}.json`);
+    } else {
+        this.props.getVideoAction(`project/${idSelectVideo}.json`);
+    }
+  };
 
 
   renderList(data) {
@@ -80,16 +86,32 @@ class Series extends Component {
     )
   }
 
+}
+
+Series.propTypes = {
+    isFetching: PropTypes.bool,
+    data: arrayOf(shape({
+        announce: PropTypes.number,
+        duration: PropTypes.string,
+        id: PropTypes.number,
+        poster: PropTypes.string,
+        published: PropTypes.number,
+        season: PropTypes.string,
+        series: PropTypes.string,
+        title: PropTypes.string
+    })),
+    history: PropTypes.object
 };
 
 const mapStateToProps = (store) => {
-    return { ...store.series }
+    return { ...store.series, videoHistory: store.video.history }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getSeriesAction: (seasonId) => dispatch(getSeries(seasonId)),
         getVideoAction: (videoId) => dispatch(getVideo(videoId)),
+        getVideoFromHistoryAction: (videoId) => dispatch(getVideoFromHistory(videoId)),
     }
 };
 

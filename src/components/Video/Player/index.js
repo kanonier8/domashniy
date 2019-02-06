@@ -5,7 +5,6 @@ class Player extends Component {
 
 
   render() {
-    console.log('v=player', this.props);
     return (
       <div className={styles.content}>
         {

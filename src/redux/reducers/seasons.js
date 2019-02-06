@@ -8,13 +8,13 @@ const initialState = {
 export function seasonsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_SEASONS_REQUEST:
-      return { ...state, isFetching: true }
+      return { ...state, isFetching: true };
 
     case GET_SEASONS_SUCCESS:
-      return { ...state, data: action.payload, isFetching: false }
+      return { ...state, data: action.payload, isFetching: false };
 
     case GET_SEASONS_ERROR:
-      return { ...state, error: true, isFetching: false }
+      return { ...state, error: true, isFetching: false };
 
     default:
       return state;

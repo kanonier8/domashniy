@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes, {arrayOf, shape} from 'prop-types';
 import Flickity from 'flickity';
 
 import { connect } from 'react-redux';
 import { getSeasons } from '../../redux/actions/seasons';
-import { getSeries } from '../../redux/actions/series';
+import { getSeries, getSeriesFromHistory } from '../../redux/actions/series';
 
 import styles from './Seasons.module.css';
 import './Carousel.css';
 
 class Seasons extends Component {
 
-  state = {};
+  state = { };
+
+  historySeries = [];
 
   componentDidMount() {
 
@@ -40,12 +43,16 @@ class Seasons extends Component {
   handleClick = (event) => {
     event.preventDefault();
     const idSelectSeason = parseInt(event.currentTarget.dataset.id);
-    this.setState({ idActiveSeason: idSelectSeason});
-    this.props.getSeriesAction(`series/${idSelectSeason}.json`);
+    this.setState({ idActiveSeason: idSelectSeason });
+    if (this.props.seriesHistory[`series/${idSelectSeason}.json`]) {
+        this.props.getSeriesFromHistoryAction(`series/${idSelectSeason}.json`);
+    } else {
+        this.props.getSeriesAction(`series/${idSelectSeason}.json`);
+    }
   };
 
   renderList = (data) => {
-    return data.map((item, index) => {
+      return data.map((item, index) => {
       return (
         <li className={styles.item} key={item.id}>
           <a className={(this.state.idActiveSeason  === item.id) ? styles.linkActive : styles.link}
@@ -74,17 +81,26 @@ class Seasons extends Component {
     )
   }
 
+}
+
+Seasons.propTypes = {
+    isFetching: PropTypes.bool,
+    data: arrayOf(shape({
+        id: PropTypes.number,
+        url: PropTypes.string,
+        title: PropTypes.string
+    }))
 };
 
-
 const mapStateToProps = (store) => {
-  return { ...store.seasons }
+  return { ...store.seasons, seriesHistory: store.series.history }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getSeasonsAction: (projectId) => dispatch(getSeasons(projectId)),
     getSeriesAction: (seasonId) => dispatch(getSeries(seasonId)),
+    getSeriesFromHistoryAction: (seasonId) => dispatch(getSeriesFromHistory(seasonId)),
   }
 };
 

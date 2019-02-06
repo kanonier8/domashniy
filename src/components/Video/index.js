@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes, { shape } from 'prop-types';
+
 import Player from './Player/';
 import Info from './Info/';
 import Spinner from '../Spinner/';
@@ -12,7 +14,6 @@ class Video extends Component {
 
   componentDidMount() {
     this.props.getVideoAction('project/0.json');
-    console.log(this.props);
   }
 
   render() {
@@ -26,6 +27,23 @@ class Video extends Component {
     )
   }
 
+}
+
+Video.propTypes = {
+    isFetching: PropTypes.bool,
+    data: shape({
+        age: PropTypes.string,
+        days: PropTypes.string,
+        description: PropTypes.string,
+        id: PropTypes.number,
+        poster: PropTypes.string,
+        season: PropTypes.string,
+        seen:  PropTypes.number,
+        series: PropTypes.string,
+        time: PropTypes.string,
+        title: PropTypes.string,
+        trackId:  PropTypes.number,
+    })
 };
 
 
@@ -37,6 +55,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getVideoAction: videoId => dispatch(getVideo(videoId)),
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Video);
