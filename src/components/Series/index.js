@@ -3,6 +3,7 @@ import styles from './Series.module.css';
 
 import { connect } from 'react-redux';
 import { getSeries } from '../../redux/actions/series';
+import { getVideo } from '../../redux/actions/video';
 
 import Spinner from '../Spinner/';
 
@@ -15,6 +16,13 @@ class Series extends Component {
 
   componentDidMount() {
     this.props.getSeriesAction('series/0.json');
+  }
+
+  handleClick = (event) => {
+    event.preventDefault();
+    const idSelectVideo = parseInt(event.currentTarget.dataset.id);
+    this.setState({ idActiveSeason: idSelectVideo });
+    this.props.getVideoAction(`project/${idSelectVideo}.json`);
   }
 
 
@@ -36,7 +44,9 @@ class Series extends Component {
         }
       return (
           <li className={styles.item} key={item.id}>
-              <a href="/" className={styles.link}>
+              <a href="/" className={styles.link}
+                          data-id={item.id}
+                          onClick={this.handleClick}>
                   <div className={classImage}>
                       <img src={item.poster} alt={item.title}/>
                       { imageContent }
@@ -78,7 +88,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getSeriesAction: (seasonID) => dispatch(getSeries(seasonID)),
+        getSeriesAction: (seasonId) => dispatch(getSeries(seasonId)),
+        getVideoAction: (videoId) => dispatch(getVideo(videoId)),
     }
 };
 
